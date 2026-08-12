@@ -1,0 +1,165 @@
+{
+  "index": "Claude-Foundations",
+  "description": "Repositories that reshape the user-level layer of a Claude Code install - context, directives, procedures, and capability that are in place before any task is known.",
+  "snapshot": "2026-08-12",
+  "owner": "danielrosehill",
+  "thesis": "Replace an eagerly-loaded bulk with a lean always-on pointer plus on-demand retrieval, applied to each slot of the user-level layer.",
+  "slots": [
+    {
+      "id": 1,
+      "name": "entrypoint",
+      "governs": "~/.claude/CLAUDE.md overall shape",
+      "residency": "eager"
+    },
+    {
+      "id": 2,
+      "name": "reference-context",
+      "governs": "~/.claude/context/*.md",
+      "residency": "on-demand"
+    },
+    {
+      "id": 3,
+      "name": "standing-directives",
+      "governs": "marker-delimited habits block inside the always-on file",
+      "residency": "eager"
+    },
+    {
+      "id": 4,
+      "name": "procedures",
+      "governs": "private SOP library, path held in plugin config",
+      "residency": "on-demand"
+    },
+    {
+      "id": 5,
+      "name": "capability",
+      "governs": "installed plugins, skills and MCP tool descriptions",
+      "residency": "on-demand"
+    }
+  ],
+  "components": [
+    {
+      "name": "Split-Claude-MD-Pattern",
+      "url": "https://github.com/danielrosehill/Split-Claude-MD-Pattern",
+      "slot": 1,
+      "role": "pattern",
+      "visibility": "public",
+      "created": "2026-03-20",
+      "adoption_step": 1,
+      "summary": "Lean ~30-50 line entrypoint plus a pointer to context/. Documents that Claude Code's CLAUDE.md loading is additive across directory levels, and that ~/.claude/CLAUDE.md and ~/CLAUDE.md are both picked up.",
+      "key_constraint": "Split on rule-versus-lookup, not on file size. A directive moved behind a pointer stops being followed."
+    },
+    {
+      "name": "Claude-User-Context-Pattern",
+      "url": "https://github.com/danielrosehill/Claude-User-Context-Pattern",
+      "slot": 2,
+      "role": "pattern",
+      "visibility": "public",
+      "created": "2026-05-13",
+      "adoption_step": 2,
+      "summary": "Depersonalised, forkable ~/.claude/ layer: lean top-level file routing to topical context/*.md files with <placeholders> for personal specifics.",
+      "key_constraint": "Pointer entries need a read-it-when trigger, not just a filename. priority=\"critical\" marks files to consult eagerly without inlining them."
+    },
+    {
+      "name": "User-Claude-MD-Plugin",
+      "url": "https://github.com/danielrosehill/User-Claude-MD-Plugin",
+      "slot": 2,
+      "role": "tooling",
+      "visibility": "public",
+      "created": "2026-04-21",
+      "adoption_step": 3,
+      "summary": "Operates on the user-level layer: chunk-user-claude, user-claude-health, list-user-context, edit-user-context.",
+      "key_constraint": "Pointer drift is the decay mode. A stale pointer is worse than a missing one."
+    },
+    {
+      "name": "Habits-Of-Claude",
+      "url": "https://github.com/danielrosehill/Habits-Of-Claude",
+      "slot": 3,
+      "role": "system",
+      "visibility": "public",
+      "created": "2026-08-03",
+      "adoption_step": 4,
+      "summary": "One file per standing habit, assembled into a pasteable markdown block and a JSON index, spliced into a marker-delimited region of the target prompt.",
+      "key_constraint": "The spliced region is a build target. Hand-edits inside the markers are overwritten. Environment facts belong in the context store, not in habits/."
+    },
+    {
+      "name": "Document-As-You-Go",
+      "url": "https://github.com/danielrosehill/Document-As-You-Go",
+      "slot": 3,
+      "role": "predecessor",
+      "visibility": "public",
+      "created": "2026-07-25",
+      "adoption_step": 4,
+      "summary": "Drop-in system prompt and slash command making agents capture what they discover instead of losing it at session end.",
+      "superseded_by": "Habits-Of-Claude",
+      "key_constraint": "Superseded in mechanism, not retired - still the clearest single-habit demonstration."
+    },
+    {
+      "name": "Claude-SOPs",
+      "url": "https://github.com/danielrosehill/Claude-SOPs",
+      "slot": 4,
+      "role": "system",
+      "visibility": "public",
+      "created": "2026-08-12",
+      "adoption_step": 5,
+      "summary": "Standard operating procedures as a private versioned markdown library read on demand: one CLAUDE.md pointer, one index, one procedure per run.",
+      "key_constraint": "Machinery public, procedures private - easy to get backwards. A context file says how things are; an SOP says what to do, in order, to reach an outcome."
+    },
+    {
+      "name": "Claude-Vault",
+      "url": "https://github.com/danielrosehill/Claude-Vault",
+      "slot": 5,
+      "role": "system",
+      "visibility": "public",
+      "created": "2026-04-26",
+      "adoption_step": 6,
+      "design_notes": "https://github.com/danielrosehill/Claude-Vault-Idea",
+      "summary": "Meta-plugin holding a vault of dormant plugins and MCP servers, activated per project, against eager plugin-description loading at user level.",
+      "key_constraint": "Adopt last - not reversible in a single edit, and the saving is illegible until the text side of the budget has shrunk."
+    },
+    {
+      "name": "Claude-Rudder",
+      "url": "https://github.com/danielrosehill/Claude-Rudder",
+      "slot": 1,
+      "role": "tooling",
+      "scope_note": "Listed for its chunk-claude / context-health-check half only. Its MCP and feedback primitives are out of scope for this index.",
+      "visibility": "public",
+      "created": "2026-04-19",
+      "adoption_step": 3,
+      "summary": "The same split one level down, at repo level: chunk-claude, context-health-check, should-i-start-fresh.",
+      "key_constraint": "The user and project layers must agree on their boundary - project knowledge in the repo's context/, machine and workflow knowledge at user level."
+    }
+  ],
+  "evidence": [
+    {
+      "name": "Claude-Context-Analysis-0526",
+      "url": "https://github.com/danielrosehill/Claude-Context-Analysis-0526",
+      "visibility": "public",
+      "created": "2026-05-04",
+      "measures": "Redacted point-in-time /context dump from a heavily-pluginned session: where the budget goes, what is eager versus lazy."
+    },
+    {
+      "name": "State-Of-Claude-Context-0426",
+      "url": "https://github.com/danielrosehill/State-Of-Claude-Context-0426",
+      "visibility": "public",
+      "created": "2026-04-23",
+      "measures": "Q&A notes on where context bloat accrues given the harness's current shape and primitives."
+    }
+  ],
+  "related_indexes": [
+    {
+      "name": "Claude-Code-Projects-Index",
+      "url": "https://github.com/danielrosehill/Claude-Code-Projects-Index",
+      "territory": "All Claude Code work - workspaces, plugins, templates. Authoritative on repo existence and descriptions; this index is authoritative on slot and composition."
+    },
+    {
+      "name": "Claude-Code-Plugins",
+      "url": "https://github.com/danielrosehill/Claude-Code-Plugins",
+      "territory": "The plugin marketplace itself."
+    },
+    {
+      "name": "Context-Engineering-Resources",
+      "url": "https://github.com/danielrosehill/Context-Engineering-Resources",
+      "territory": "Third-party context-engineering tooling."
+    }
+  ]
+}
