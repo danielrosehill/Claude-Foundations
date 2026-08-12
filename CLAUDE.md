@@ -22,6 +22,13 @@ created, adoption step) and `README.md` is authoritative on prose.
 - **Do not add a component without checking `SCOPE.md`.** The most common wrong
   addition is a domain plugin or an agent workspace — those belong in
   `Claude-Code-Projects-Index`. The second most common is an unbuilt idea.
+- **Assume succession, not coexistence.** New work on a slot extends or supersedes
+  the existing work on it. Before adding an entry, identify which entry it succeeds
+  and record it both ways (`supersedes` / `superseded_by`) plus what changed. A
+  superseded entry is marked, never deleted — the reason an approach was not enough
+  is the part that is expensive to rediscover. Exactly one `status: current` per
+  lineage. Filing two components as parallel peers when one clearly followed the
+  other is the characteristic failure here.
 - **Verify before writing.** Repo names, visibility, and creation dates come from
   `gh repo view danielrosehill/<name> --json name,visibility,createdAt`, not from
   memory. Several of these repos have similar names.

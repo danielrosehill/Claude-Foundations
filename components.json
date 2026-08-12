@@ -4,6 +4,7 @@
   "snapshot": "2026-08-12",
   "owner": "danielrosehill",
   "thesis": "Replace an eagerly-loaded bulk with a lean always-on pointer plus on-demand retrieval, applied to each slot of the user-level layer.",
+  "lineage_note": "Most components are successive attempts at the same slot, not parallel parts. Each lineage ends in one component with status=current; that is the one to adopt. Succession is inferred from dates plus overlapping content, recorded 2026-08-12 - the repos themselves mostly do not cross-reference.",
   "slots": [
     {
       "id": 1,
@@ -33,7 +34,22 @@
       "id": 5,
       "name": "capability",
       "governs": "installed plugins, skills and MCP tool descriptions",
-      "residency": "on-demand"
+      "residency": "on-demand",
+      "current_approach": {
+        "name": "retrieval-substrate",
+        "summary": "Do not install the library. Keep two lookup tools resident - search the library, read one definition - and fetch a skill when the task calls for it.",
+        "supersedes": [
+          "Claude-Vault",
+          "Claude-Controller"
+        ],
+        "measured": {
+          "eager_plugin_listing_tokens_per_session": 122000,
+          "substrate_lookup_tools_tokens": 1100,
+          "library_size_skills": 1800,
+          "measured_on": "2026-08-12"
+        },
+        "decision_record": "private - not linked"
+      }
     }
   ],
   "components": [
@@ -46,7 +62,9 @@
       "created": "2026-03-20",
       "adoption_step": 1,
       "summary": "Lean ~30-50 line entrypoint plus a pointer to context/. Documents that Claude Code's CLAUDE.md loading is additive across directory levels, and that ~/.claude/CLAUDE.md and ~/CLAUDE.md are both picked up.",
-      "key_constraint": "Split on rule-versus-lookup, not on file size. A directive moved behind a pointer stops being followed."
+      "key_constraint": "Split on rule-versus-lookup, not on file size. A directive moved behind a pointer stops being followed.",
+      "status": "first-statement",
+      "superseded_by": "Claude-User-Context-Pattern"
     },
     {
       "name": "Claude-User-Context-Pattern",
@@ -57,7 +75,12 @@
       "created": "2026-05-13",
       "adoption_step": 2,
       "summary": "Depersonalised, forkable ~/.claude/ layer: lean top-level file routing to topical context/*.md files with <placeholders> for personal specifics.",
-      "key_constraint": "Pointer entries need a read-it-when trigger, not just a filename. priority=\"critical\" marks files to consult eagerly without inlining them."
+      "key_constraint": "Pointer entries need a read-it-when trigger, not just a filename. priority=\"critical\" marks files to consult eagerly without inlining them.",
+      "status": "current",
+      "supersedes": [
+        "Split-Claude-MD-Pattern"
+      ],
+      "changed_from_predecessor": "Added what the prose had missed: priority=\"critical\" per file, read-it-when triggers instead of bare filenames, and placeholders making the whole directory portable to a new machine."
     },
     {
       "name": "User-Claude-MD-Plugin",
@@ -68,7 +91,9 @@
       "created": "2026-04-21",
       "adoption_step": 3,
       "summary": "Operates on the user-level layer: chunk-user-claude, user-claude-health, list-user-context, edit-user-context.",
-      "key_constraint": "Pointer drift is the decay mode. A stale pointer is worse than a missing one."
+      "key_constraint": "Pointer drift is the decay mode. A stale pointer is worse than a missing one.",
+      "status": "current",
+      "changed_from_predecessor": "Made the hand-sort repeatable and added drift auditing; the pattern was correct but unusable at scale by hand."
     },
     {
       "name": "Habits-Of-Claude",
@@ -79,7 +104,12 @@
       "created": "2026-08-03",
       "adoption_step": 4,
       "summary": "One file per standing habit, assembled into a pasteable markdown block and a JSON index, spliced into a marker-delimited region of the target prompt.",
-      "key_constraint": "The spliced region is a build target. Hand-edits inside the markers are overwritten. Environment facts belong in the context store, not in habits/."
+      "key_constraint": "The spliced region is a build target. Hand-edits inside the markers are overwritten. Environment facts belong in the context store, not in habits/.",
+      "status": "current",
+      "supersedes": [
+        "Document-As-You-Go"
+      ],
+      "changed_from_predecessor": "Turned a single pasteable disposition into a mechanism: one file per habit, assembled by script, spliced into a marked build-target region."
     },
     {
       "name": "Document-As-You-Go",
@@ -91,7 +121,8 @@
       "adoption_step": 4,
       "summary": "Drop-in system prompt and slash command making agents capture what they discover instead of losing it at session end.",
       "superseded_by": "Habits-Of-Claude",
-      "key_constraint": "Superseded in mechanism, not retired - still the clearest single-habit demonstration."
+      "key_constraint": "Superseded in mechanism, not retired - still the clearest single-habit demonstration.",
+      "status": "first-statement"
     },
     {
       "name": "Claude-SOPs",
@@ -102,7 +133,8 @@
       "created": "2026-08-12",
       "adoption_step": 5,
       "summary": "Standard operating procedures as a private versioned markdown library read on demand: one CLAUDE.md pointer, one index, one procedure per run.",
-      "key_constraint": "Machinery public, procedures private - easy to get backwards. A context file says how things are; an SOP says what to do, in order, to reach an outcome."
+      "key_constraint": "Machinery public, procedures private - easy to get backwards. A context file says how things are; an SOP says what to do, in order, to reach an outcome.",
+      "status": "current"
     },
     {
       "name": "Claude-Vault",
@@ -114,7 +146,10 @@
       "adoption_step": 6,
       "design_notes": "https://github.com/danielrosehill/Claude-Vault-Idea",
       "summary": "Meta-plugin holding a vault of dormant plugins and MCP servers, activated per project, against eager plugin-description loading at user level.",
-      "key_constraint": "Adopt last - not reversible in a single edit, and the saving is illegible until the text side of the budget has shrunk."
+      "key_constraint": "Adopt last - not reversible in a single edit, and the saving is illegible until the text side of the budget has shrunk.",
+      "status": "superseded",
+      "superseded_by": "retrieval-substrate",
+      "superseded_reason": "Superseded in approach: activation still pays to describe the dormant set, and per-project activation state goes stale. Retrieval describes nothing until searched and keeps no per-project state."
     },
     {
       "name": "Claude-Rudder",
@@ -126,7 +161,8 @@
       "created": "2026-04-19",
       "adoption_step": 3,
       "summary": "The same split one level down, at repo level: chunk-claude, context-health-check, should-i-start-fresh.",
-      "key_constraint": "The user and project layers must agree on their boundary - project knowledge in the repo's context/, machine and workflow knowledge at user level."
+      "key_constraint": "The user and project layers must agree on their boundary - project knowledge in the repo's context/, machine and workflow knowledge at user level.",
+      "status": "current"
     }
   ],
   "evidence": [

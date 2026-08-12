@@ -31,7 +31,26 @@ If the repo owns a slot that is not in the current list of five, that is a real
 finding: say so explicitly rather than forcing it into the nearest existing slot,
 and propose the new slot before writing anything.
 
-## 3. Gather facts, do not recall them
+## 3. Find what it succeeds
+
+**Assume succession before assuming coexistence.** New work on a slot almost always
+extends or improves on what was already there. Ask which existing entry it succeeds
+before writing it as a new peer — filing two components as parallel when one clearly
+followed the other is the characteristic mistake in this index.
+
+Then record it both ways: `superseded_by` on the older entry, `supersedes` on the
+newer, plus `changed_from_predecessor` — one sentence on what the successor actually
+changed, and, on the older entry, `superseded_reason` if the approach itself was
+abandoned rather than merely refined.
+
+Do not delete the predecessor. Mark it `status: first-statement` (still the clearest
+statement of the problem) or `status: superseded` (approach abandoned), and leave it
+listed. After the edit, exactly one entry per lineage carries `status: current`.
+
+If it genuinely succeeds nothing, say so and check whether it implies a **new slot**
+— that is a larger claim than adding a component. Raise it before writing.
+
+## 4. Gather facts, do not recall them
 
 ```bash
 gh repo view danielrosehill/<NAME> --json name,description,visibility,createdAt,url \
@@ -43,13 +62,13 @@ Several repos in this space have near-identical names (`Claude-User-Context-Patt
 vs `Split-Claude-MD-Pattern` vs `User-Claude-MD-Plugin` vs `Claude-MD-Experiments`).
 Confirm you have the right one from its README, not its name.
 
-## 4. Write the entry
+## 5. Write the entry
 
 **`components.json`** — add to `components` (or `evidence`, if it measures the
 problem rather than changing the layer), with: `name`, `url`, `slot`, `role`
 (`pattern` | `system` | `tooling` | `predecessor`), `visibility`, `created`,
-`adoption_step`, `summary`, `key_constraint`. Add `scope_note` if only part of the
-repo is in scope, and `superseded_by` if applicable.
+`adoption_step`, `summary`, `key_constraint`, and the `status` plus lineage fields
+from step 3. Add `scope_note` if only part of the repo is in scope.
 
 **`README.md`** — one `####` block in the matching slot section: name, a
 `View Repo` badge, then prose. The prose must carry:
@@ -61,14 +80,14 @@ repo is in scope, and `superseded_by` if applicable.
 
 Do not restate the component's feature list. Do not exceed three short paragraphs.
 
-## 5. Place it in the adoption order
+## 6. Place it in the adoption order
 
 Decide where the component sits in `docs/adoption-order.md`. If it introduces a
 new dependency — "X must be in place before this works" — add it to the step and
 to the summary table's *Blocked by* and *Fails as* columns. Say what it looks like
 when adopted out of order; a step with no failure mode is probably not a real step.
 
-## 6. Bump and ship
+## 7. Bump and ship
 
 - `Snapshot:` line in `README.md` and `snapshot` in `components.json` → today's
   absolute date.

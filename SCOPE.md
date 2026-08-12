@@ -23,6 +23,27 @@ A repo belongs here if all three hold:
 Maintenance tooling counts. So does a pattern with no code, if the pattern is what
 is being adopted.
 
+## Successors, not replacements
+
+The default assumption is that **new work on a slot extends or supersedes the
+existing work on it, rather than sitting beside it.** So a new component is filed
+by asking which existing entry it succeeds, and the answer is recorded on both
+entries: `supersedes` / `superseded_by`, plus a sentence on what actually changed.
+
+A superseded component **stays listed**. It is marked, not deleted. The reasons are
+practical rather than sentimental: the first statement of a problem is usually its
+clearest statement, and the reason an earlier approach was not enough is the part
+that stops the next person — or the next agent — from re-deriving it. Deleting the
+predecessor leaves only a conclusion, which cannot be argued with.
+
+Every lineage must have exactly one `status: current` entry, or, where the current
+answer is not a public repo, a `current_approach` recorded on the slot itself. If a
+new entry does not succeed anything, say so explicitly — it means the slot is new,
+which is a bigger claim than adding a component and should be stated as one.
+
+Succession is generally **inferred** here, from dates plus overlapping content, and
+labelled as such. Where a repo declares its own succession, cite the repo instead.
+
 ## Out of scope
 
 - **Domain plugins and agent workspaces** — purchasing, transcription, sysadmin,
@@ -46,6 +67,7 @@ is being adopted.
 | [Claude Vault](https://github.com/danielrosehill/Claude-Vault) — dormant plugin activation | **In**, as slot 5 | Capability is loaded before the task is known, same as context is. Excluding it would make the index a context index rather than a foundations index. |
 | [Claude Context Analysis 0526](https://github.com/danielrosehill/Claude-Context-Analysis-0526), [State Of Claude Context 0426](https://github.com/danielrosehill/State-Of-Claude-Context-0426) | **Listed as evidence, not components** | They measure the problem rather than changing the layer. Kept because the measurement is the justification, and an index that only shows conclusions cannot be argued with. |
 | [Document As You Go](https://github.com/danielrosehill/Document-As-You-Go) — superseded by Habits Of Claude | **In**, under slot 3 | Superseded in mechanism, not retired: it is still the clearest single-habit demonstration, and the lineage explains why Habits Of Claude is shaped as it is. |
+| [Claude SOP Writer Plugin](https://github.com/danielrosehill/Claude-SOP-Writer-Plugin) — authoring SOPs and flowcharts, compiled to print via Typst | **Out**, and *not* a predecessor of Claude SOPs | Same subject, different audience and direction: it produces documents for humans to read on paper, whereas slot 4 is about a library an agent reads on demand. Adjacent lineage, not the same lineage — noted here so the two are not merged by mistake. |
 | [ClaudeMD Turnstile](https://github.com/danielrosehill/ClaudeMD-Turnstile) — dev vs user `CLAUDE.md` | **Out** | Project-level concern about audience, not about the always-on user layer. |
 | [The User Voice Types](https://github.com/danielrosehill/The-User-Voice-Types) — snippets for tolerating dictation errors | **Out** | Genuine standing directives, but the delivery mechanism is loose snippets. If they are ever folded into `habits/`, they arrive here through Habits Of Claude rather than as their own entry. |
 | [Claude Style Switcher](https://github.com/danielrosehill/Claude-Style-Switcher) — tone and output-shape fragments | **Out** | Same reason: drop-in fragments for a prompt, not a slot in the layer. |

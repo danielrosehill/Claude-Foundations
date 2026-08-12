@@ -27,7 +27,13 @@ measure and never at all by people who do not.
 
 ## 1. Split the entrypoint
 
-→ [Split CLAUDE.md Pattern](https://github.com/danielrosehill/Split-Claude-MD-Pattern)
+→ **fork** [Claude User Context Pattern](https://github.com/danielrosehill/Claude-User-Context-Pattern)
+· **read** [Split CLAUDE.md Pattern](https://github.com/danielrosehill/Split-Claude-MD-Pattern) for the reasoning
+
+Two repos cover this step because the second is the successor to the first. The
+Split pattern states the problem and the loading model; the User Context Pattern is
+the same split worked through to a directory you can clone. Take the reasoning from
+one and the files from the other.
 
 Do this before writing anything new into `CLAUDE.md`, because the split changes
 where new material *should* go, and material written into the monolith in the
@@ -119,18 +125,28 @@ paths, and real business process.
 
 ## 6. Then, and only then, the capability layer
 
-→ [Claude Vault](https://github.com/danielrosehill/Claude-Vault)
+→ retrieval over a library rather than installation of one.
+Predecessor, for the reasoning: [Claude Vault](https://github.com/danielrosehill/Claude-Vault)
 
 Last, for two reasons. It is the only slot whose adoption is not reversible by a
-single edit — uninstalling a marketplace and re-reaching its plugins through a
+single edit — uninstalling a marketplace and re-reaching its contents through a
 substrate touches the whole install. And its payoff is only legible once steps 1–5
 have shrunk the text side of the budget; while the prompt is still the dominant
 line item, the tool-description saving looks like noise.
 
-Order within this step: measure the current cost of eager descriptions, move the
-plugins you use weekly, and leave the long tail dormant. In my own setup the long
-tail is the entire saving — roughly 122k tokens per session of eager plugin
-listing against about 1.1k for the two substrate lookup tools that replace it.
+**Do not stop at the intermediate step.** The obvious first move is to keep the
+library installed and manage which parts are awake per project — that is what
+Claude Vault does, and it is a real improvement over installing everything hot. It
+is also where it is tempting to stop, and stopping there keeps two costs: something
+must still describe the dormant set for it to be selectable, and the per-project
+activation state is manual work that goes stale exactly the way a pointer table
+does. Go to retrieval: nothing is described until it is searched for, and there is
+no per-project state at all.
+
+In my own setup this step is the largest single saving of the six — roughly 122k
+tokens per session of eager plugin listing against about 1.1k for the two lookup
+tools that replace it, over a library of about 1,800 skills, none installed
+(measured 2026-08-12).
 
 ## Summary
 
@@ -142,4 +158,4 @@ listing against about 1.1k for the two substrate lookup tools that replace it.
 | 3 | Install maintenance tooling | 2 | Pointer drift; stale pointers |
 | 4 | Convert directives into habits | 1, 2 | Directives diluted by reference material |
 | 5 | Externalise procedures | 2 | SOPs and context files conflated |
-| 6 | Capability layer | 0, and ideally 1–5 | Saving looks like noise; hard to reverse |
+| 6 | Capability layer | 0, and ideally 1–5 | Saving looks like noise; hard to reverse; or stalling at per-project activation |
