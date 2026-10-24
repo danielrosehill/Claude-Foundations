@@ -96,20 +96,21 @@
       "changed_from_predecessor": "Made the hand-sort repeatable and added drift auditing; the pattern was correct but unusable at scale by hand."
     },
     {
-      "name": "Habits-Of-Claude",
-      "url": "https://github.com/danielrosehill/Habits-Of-Claude",
+      "name": "Agent-Habits",
+      "url": "https://github.com/danielrosehill/Agent-Habits",
       "slot": 3,
       "role": "system",
       "visibility": "public",
       "created": "2026-08-03",
       "adoption_step": 4,
-      "summary": "One file per standing habit, assembled into a pasteable markdown block and a JSON index, spliced into a marker-delimited region of the target prompt.",
-      "key_constraint": "The spliced region is a build target. Hand-edits inside the markers are overwritten. Environment facts belong in the context store, not in habits/.",
+      "summary": "Habits (rules, always-on or triggered) and SOPs (procedures) as one markdown file each in a private ~/.claude-user-data folder; one generated CLAUDE.md block carries a summary line per habit and a trigger line per SOP. Ships a public library of example habits to adopt.",
+      "key_constraint": "The block is a build target, and the summary line is the only part always in context, so it must carry the rule and its main exception. User content never lives in the plugin repo. Environment facts belong in the context store, not in habits.",
       "status": "current",
       "supersedes": [
-        "Document-As-You-Go"
+        "Document-As-You-Go",
+        "Claude-SOPs"
       ],
-      "changed_from_predecessor": "Turned a single pasteable disposition into a mechanism: one file per habit, assembled by script, spliced into a marked build-target region."
+      "changed_from_predecessor": "Renamed from Habits-Of-Claude 2026-10-24 and merged with Claude-SOPs: full-text inlining replaced by an index block (~18.5k to ~4.5k chars), personal habits moved to user data, the repo's habits became a depersonalised library."
     },
     {
       "name": "Document-As-You-Go",
@@ -120,7 +121,7 @@
       "created": "2026-07-25",
       "adoption_step": 4,
       "summary": "Drop-in system prompt and slash command making agents capture what they discover instead of losing it at session end.",
-      "superseded_by": "Habits-Of-Claude",
+      "superseded_by": "Agent-Habits",
       "key_constraint": "Superseded in mechanism, not retired - still the clearest single-habit demonstration.",
       "status": "first-statement"
     },
@@ -128,13 +129,14 @@
       "name": "Claude-SOPs",
       "url": "https://github.com/danielrosehill/Claude-SOPs",
       "slot": 4,
-      "role": "system",
+      "role": "predecessor",
       "visibility": "public",
       "created": "2026-08-12",
       "adoption_step": 5,
       "summary": "Standard operating procedures as a private versioned markdown library read on demand: one CLAUDE.md pointer, one index, one procedure per run.",
-      "key_constraint": "Machinery public, procedures private - easy to get backwards. A context file says how things are; an SOP says what to do, in order, to reach an outcome.",
-      "status": "current"
+      "key_constraint": "Machinery public, procedures private - easy to get backwards. A context file says how things are; an SOP says what to do, in order, to reach an outcome. Archived 2026-10-24; merged into Agent-Habits, where SOPs are the second kind beside habits.",
+      "status": "merged",
+      "superseded_by": "Agent-Habits"
     },
     {
       "name": "Claude-Vault",

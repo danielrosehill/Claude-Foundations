@@ -88,7 +88,7 @@ around its absence.
 
 ## 4. Convert directives into habits
 
-→ [Habits Of Claude](https://github.com/danielrosehill/Habits-Of-Claude)
+→ [Agent Habits](https://github.com/danielrosehill/Agent-Habits)
 · lineage: [Document As You Go](https://github.com/danielrosehill/Document-As-You-Go)
 
 Only now, with the entrypoint pruned, is it worth treating the resident directive
@@ -96,8 +96,8 @@ block as a first-class artefact. Doing this before steps 1–2 buries the habits
 reference material, where they read as background rather than as instructions and
 get diluted accordingly.
 
-From this point the `~/CLAUDE.md` habits region is a **build target**: edit
-`habits/`, run the assembler, splice. Hand-edits inside the markers get
+From this point the `~/CLAUDE.md` habits block is a **build target**: edit
+`~/.claude-user-data/habits/` (or adopt from the library), run `habits.py install`. Hand-edits inside the markers get
 overwritten on the next install, and — worse — drift silently until
 `reconcile-habits` catches the divergence between what the repo says and what the
 prompt actually contains.
@@ -108,7 +108,7 @@ the context store from step 2. Habits are dispositions, not configuration.
 
 ## 5. Externalise procedures
 
-→ [Claude SOPs](https://github.com/danielrosehill/Claude-SOPs)
+→ [Agent Habits](https://github.com/danielrosehill/Agent-Habits), SOP half (formerly Claude SOPs)
 
 Anything multi-step that you re-run: too long to keep resident, too specific to
 re-derive. Comes after the context store because the two are easy to confuse, and

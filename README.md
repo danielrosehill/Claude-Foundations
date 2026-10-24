@@ -193,24 +193,26 @@ land.
 The one thing that must be resident to work — so it gets the always-on file, and
 it gets treated as a first-class unit rather than as prose.
 
-#### Habits Of Claude
-[![View Repo](https://img.shields.io/badge/View%20Repo-blue?style=flat-square&logo=github)](https://github.com/danielrosehill/Habits-Of-Claude)
+#### Agent Habits
+[![View Repo](https://img.shields.io/badge/View%20Repo-blue?style=flat-square&logo=github)](https://github.com/danielrosehill/Agent-Habits)
 ![Current](https://img.shields.io/badge/Current-brightgreen?style=flat-square)
 
-> Successor to [Document As You Go](#document-as-you-go) — that repo's single
-> habit, generalised into a mechanism.
+> Successor to [Document As You Go](#document-as-you-go), and since 2026-10-24 also
+> to Claude SOPs. Formerly Habits Of Claude.
 
-One file per **habit** — a standing disposition in force before the task is known
-— assembled by script into a pasteable markdown block and a JSON index, then
-spliced into a marker-delimited region of the target prompt. The region in
-`~/CLAUDE.md` is a **build target**: you edit `habits/`, run the assembler, and
-never hand-edit the output.
+One file per **habit** (a standing rule, always on or with a trigger) and per
+**SOP** (a procedure with steps), kept in a private `~/.claude-user-data/` folder.
+One generated, marker-delimited block in `~/CLAUDE.md` carries a summary line per
+habit and a trigger line per SOP. The full texts are read on demand. The public
+repo is machinery plus a depersonalised **library** of example habits that anyone
+can adopt, with tunable values such as a spend limit filled in on adoption.
 
 The insight was never any one instruction. It was that the useful unit is the
 habit. A single continuous system prompt obscures that, and gets edited by
-accretion until nobody can say what it currently asks for; one file per
-disposition can be added, revised, reconciled against drift, and installed
-selectively into any CLAUDE.md.
+accretion until nobody can say what it currently asks for. One file per
+disposition can be added, revised, reconciled against drift, and adopted or
+shared. The test that separates the two kinds is rule versus steps, not always
+versus sometimes.
 
 #### Document As You Go
 [![View Repo](https://img.shields.io/badge/View%20Repo-blue?style=flat-square&logo=github)](https://github.com/danielrosehill/Document-As-You-Go)
@@ -218,7 +220,7 @@ selectively into any CLAUDE.md.
 
 The ancestor (2026-07-25): a drop-in system prompt and slash command making
 agents capture what they discover — undocumented APIs, real auth flows, dead ends
-— instead of losing it when the session ends. Habits Of Claude is this one
+— instead of losing it when the session ends. Agent Habits is this one
 generalised, and it remains the best single-habit demonstration of the idea.
 
 ---
@@ -228,17 +230,14 @@ generalised, and it remains the best single-habit demonstration of the idea.
 Multi-step processes I re-run: too long to keep resident, too specific to invent
 each time.
 
-#### Claude SOPs
-[![View Repo](https://img.shields.io/badge/View%20Repo-blue?style=flat-square&logo=github)](https://github.com/danielrosehill/Claude-SOPs)
+#### Claude SOPs → merged into Agent Habits
+![Merged](https://img.shields.io/badge/Merged-lightgray?style=flat-square)
 
-Your own standard operating procedures as a private, versioned markdown library
-Claude reads on demand: one `CLAUDE.md` pointer, one index, one procedure loaded
-per run.
-
-The split is the point and is easy to get backwards. The **public** repo holds
-only machinery — the `sop-*` skills, `scripts/sop.py`, the format spec. The
-**procedures** live in a separate private library whose path sits in the plugin's
-config. Machinery is shareable; procedures are personal and often sensitive.
+Procedures are now the second kind in [Agent Habits](#agent-habits), alongside
+habits. The format, `sop.py` and the `sop-*` skills carried over unchanged, and the
+library is still `~/.claude-user-data/sops/`. The old repo
+([Claude-SOPs](https://github.com/danielrosehill/Claude-SOPs)) is archived. The
+split that made it work still holds: machinery public, procedures private.
 
 ---
 
